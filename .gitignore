@@ -1,0 +1,14 @@
+# Ignore pycharm files #
+.idea/*
+
+# Ignore personal program directories #
+Code/
+CompressedData/
+Dock/
+Images/
+MicrosoftFiles/
+Music/
+OtherData/
+RawData/
+TextFiles/
+Videos/
