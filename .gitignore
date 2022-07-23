@@ -1,7 +1,10 @@
-# Ignore pycharm files #
+# Pycharm files #
 .idea/*
 
-# Ignore personal program directories #
+# venv files #
+venv/*
+
+# Personal program directories #
 Code/
 CompressedData/
 Dock/

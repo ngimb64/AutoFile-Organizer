@@ -10,7 +10,7 @@ from watchdog.events import FileSystemEventHandler
 
 
 #  Pseudo Constants #
-SRC_DIR = 'Dock' 
+SRC_DIR = 'Dock'
 TEXT_DIR = 'TextFiles'
 IMG_DIR = 'Images'
 VID_DIR = 'Videos'
@@ -49,55 +49,106 @@ class BackupHandler(FileSystemEventHandler):
     """          on event detection per modification. """
     """ Returns: nothing """
     def on_modified(self, event):
+        # Get the current working directory #
+        cwd = os.getcwd()
+
         # Iterate through available files in source dir #
         for file in os.scandir(SRC_DIR):
-            # Set the source and destination files #
-            src_file = f'./{SRC_DIR}/{file.name}'
+            # If the OS is Windows #
+            if os.name == 'nt':
+                src_file = f'{cwd}\\{SRC_DIR}\\{file.name}'
+            # If the OS is Linux #
+            else:
+                # Set the source and destination files #
+                src_file = f'{cwd}/{SRC_DIR}/{file.name}'
 
             # If the file is a text file #
             if file.name.endswith(text_ext):
-                # Move file to the TextFile dir #
-                dst_file = f'./{TEXT_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{TEXT_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the TextFile dir #
+                    dst_file = f'{cwd}/{TEXT_DIR}/{file.name}'
             
             # If the file is a image #
             elif file.name.endswith(img_ext):
-                # Move file to the Images dir #
-                dst_file = f'./{IMG_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{IMG_DIR}\\{file.name}'
+                # If the Os is Linux #
+                else:
+                    # Move file to the Images dir #
+                    dst_file = f'{cwd}/{IMG_DIR}/{file.name}'
             
             # If the file is a video #
             elif file.name.endswith(vid_ext):
-                # Move file to the Videos dir #
-                dst_file = f'./{VID_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{VID_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the Videos dir #
+                    dst_file = f'{cwd}/{VID_DIR}/{file.name}'
 
             # If the file is a music track #
             elif file.name.endswith(music_ext):
-                # Move file to the Music dir #
-                dst_file = f'./{MUSIC_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{MUSIC_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the Music dir #
+                    dst_file = f'{cwd}/{MUSIC_DIR}/{file.name}'
 
             # If the file is source code #
             elif file.name.endswith(code_ext):
-                # Move file to the Code dir #
-                dst_file = f'./{CODE_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{CODE_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the Code dir #
+                    dst_file = f'{cwd}/{CODE_DIR}/{file.name}'
 
             # If the file is a compressed archive #
             elif file.name.endswith(comp_ext):
-                # Move file to the CompressedData dir #
-                dst_file = f'./{COMP_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{COMP_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the CompressedData dir #
+                    dst_file = f'{cwd}/{COMP_DIR}/{file.name}'
 
             # If the file in raw data format #
             elif file.name.endswith(data_ext):
-                # Move file to the RawData dir #
-                dst_file = f'./{DATA_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{DATA_DIR}\\{file.name}'
+                else:
+                    # Move file to the RawData dir #
+                    dst_file = f'{cwd}/{DATA_DIR}/{file.name}'
 
             # If the file is a Windows based file #
             elif file.name.endswith(win_ext):
-                # Move file to the MicrosoftFiles dir #
-                dst_file = f'./{WIN_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{WIN_DIR}\\{file.name}'
+                # If the OS is Linux #
+                else:
+                    # Move file to the MicrosoftFiles dir #
+                    dst_file = f'{cwd}/{WIN_DIR}/{file.name}'
 
             # If the file is of unknown data type #
             else:
-                # Move file to the OtherData dir #
-                dst_file = f'./{OTHER_DIR}/{file.name}'
+                # If the OS is Windows #
+                if os.name == 'nt':
+                    dst_file = f'{cwd}\\{OTHER_DIR}\\{file.name}'
+                else:
+                    # Move file to the OtherData dir #
+                    dst_file = f'{cwd}/{OTHER_DIR}/{file.name}'
 
             try:
                 # Copy the source dir file to the destination dir #
@@ -141,7 +192,7 @@ def main():
     # Run file system monitor until Ctrl+C #
     try:
         while True:
-            time.sleep(10)
+            time.sleep(15)
 
     # If Ctrl+C is detected #
     except KeyboardInterrupt:
