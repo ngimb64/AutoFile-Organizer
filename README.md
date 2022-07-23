@@ -6,7 +6,7 @@
 > This program runs on Windows and Linux, written in Python 3.9
 
 ## Purpose
-> Monitors source folder and automatically backs up data put in source folder to destination folder.
+> Monitors source folder and automatically backs up data put in source folder to destination folder by file extension type.
 
 ## Installation
 - Run the setup.py script to build a virtual environment and install all external packages in the created venv.
