@@ -7,10 +7,10 @@
 &#9745;&#65039; Pylint verified 9.78/10
 
 ## Prereqs
-> This program runs on Windows and Linux, written in Python 3.9
+This program runs on Windows and Linux, written in Python 3.9
 
 ## Purpose
-> Monitors source folder and automatically backs up data put in source folder to destination folder by file extension type.
+Monitors source folder and automatically backs up data put in source folder to destination folder by file extension type.
 
 ## Installation
 - Run the setup.py script to build a virtual environment and install all external packages in the created venv.
