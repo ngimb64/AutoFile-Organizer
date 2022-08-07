@@ -1,9 +1,8 @@
-# Built-in modules #
+""" Built-in modules """
 import os
 import shutil
 import sys
 import time
-
 # External modules #
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
@@ -30,9 +29,9 @@ vid_ext = ('.acc', '.adt', '.adts', '.avi', '.flv', '.mov', '.mpeg', '.wmv')
 
 music_ext = ('.aif', '.aifc', '.aiff', '.m4a', '.mp3', '.mp4', '.wav', '.wma')
 
-code_ext = ('.bat', '.csv', '.dll', '.htm', '.html', '.xhtml', '.jhtml', '.ini', 
-            '.jar', '.c', '.cc', '.cpp', '.cxx', '.js', '.jse', '.cs', '.py', 
-            '.css', '.jsp', '.jspx', '.wss', '.do', '.action', '.pl', '.php', 
+code_ext = ('.bat', '.csv', '.dll', '.htm', '.html', '.xhtml', '.jhtml', '.ini',
+            '.jar', '.c', '.cc', '.cpp', '.cxx', '.js', '.jse', '.cs', '.py',
+            '.css', '.jsp', '.jspx', '.wss', '.do', '.action', '.pl', '.php',
             '.php3', '.php4', '.phtml', '.rb', '.rhtml', '.xml')
 
 comp_ext = ('.ar', '.bz2', '.gzip', '.rar', '.zip')
@@ -40,15 +39,19 @@ comp_ext = ('.ar', '.bz2', '.gzip', '.rar', '.zip')
 data_ext = ('.bin', '.dif', '.dump', '.exe', '.iso', '.mid', '.midi', '.swf', '.tmp')
 
 win_ext = ('.doc', '.docm', '.docx', '.dot', '.dotx', '.eml', '.mdb', '.msi',
-           '.pot', '.potm', '.potx', '.ppam', '.pps', '.ppsm', '.ppsx', '.ppt', 
+           '.pot', '.potm', '.potx', '.ppam', '.pps', '.ppsm', '.ppsx', '.ppt',
            '.pptm', '.pptx', '.pst', '.pub', '.sldm', '.sldx', '.sys', '.wks', '.wmd')
 
 
 class BackupHandler(FileSystemEventHandler):
-    """ Purpose: copies contents of source dir to dest dir """
-    """          on event detection per modification. """
-    """ Returns: nothing """
+    """ Class is trigger when the monitored SRC_DIR detects modification """
     def on_modified(self, event):
+        """
+        Copies contents of source dir to dest dir on event detection per modification.
+
+        :param event:  On detection of modification of contents of SRC_DIR.
+        :return:  Nothing
+        """
         # Get the current working directory #
         cwd = os.getcwd()
 
@@ -71,7 +74,7 @@ class BackupHandler(FileSystemEventHandler):
                 else:
                     # Move file to the TextFile dir #
                     dst_file = f'{cwd}/{TEXT_DIR}/{file.name}'
-            
+
             # If the file is a image #
             elif file.name.endswith(img_ext):
                 # If the OS is Windows #
@@ -81,7 +84,7 @@ class BackupHandler(FileSystemEventHandler):
                 else:
                     # Move file to the Images dir #
                     dst_file = f'{cwd}/{IMG_DIR}/{file.name}'
-            
+
             # If the file is a video #
             elif file.name.endswith(vid_ext):
                 # If the OS is Windows #
@@ -161,15 +164,12 @@ class BackupHandler(FileSystemEventHandler):
                 pass
 
 
-"""
-########################################################################################################################
-Name:       main
-Purpose:    Facilitates file system handler, copies data to desired folders based on file extension.
-Parameters: Nothing
-Returns:    Nothing
-########################################################################################################################
-"""
 def main():
+    """
+    Facilitates file system handler, copies data to desired folders based on file extension.
+
+    :return:  Nothing
+    """
     # Ensure the program directories exist #
     for dirname in (SRC_DIR, TEXT_DIR, IMG_DIR, VID_DIR, MUSIC_DIR,
                     CODE_DIR, COMP_DIR, DATA_DIR, WIN_DIR, OTHER_DIR):
@@ -178,7 +178,7 @@ def main():
             # Create the directory #
             os.mkdir(dirname)
 
-    print('Running File Backup Automater, hit Ctrl + C to exit')
+    print('[!] Running File Backup Automater, hit Ctrl + C to exit')
 
     # Initialize BackupHandler object #
     file_monitor = BackupHandler()
