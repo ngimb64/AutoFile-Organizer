@@ -3,12 +3,12 @@ import os
 import shutil
 import sys
 import time
+from pathlib import Path
 # External modules #
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-
-#  Pseudo Constants #
+# Global variables #
 SRC_DIR = 'Dock'
 TEXT_DIR = 'TextFiles'
 IMG_DIR = 'Images'
@@ -20,27 +20,18 @@ DATA_DIR = 'RawData'
 WIN_DIR = 'MicrosoftFiles'
 OTHER_DIR = 'OtherData'
 
-# Global variables #
-text_ext = ('.txt', '.pdf', '.rtf', '.tif', '.tiff', '.vob')
-
-img_ext = ('.bmp', '.gif', '.jpg', '.jpeg', '.png', '.thm')
-
-vid_ext = ('.acc', '.adt', '.adts', '.avi', '.flv', '.mov', '.mpeg', '.wmv')
-
-music_ext = ('.aif', '.aifc', '.aiff', '.m4a', '.mp3', '.mp4', '.wav', '.wma')
-
-code_ext = ('.bat', '.csv', '.dll', '.htm', '.html', '.xhtml', '.jhtml', '.ini',
-            '.jar', '.c', '.cc', '.cpp', '.cxx', '.js', '.jse', '.cs', '.py',
-            '.css', '.jsp', '.jspx', '.wss', '.do', '.action', '.pl', '.php',
-            '.php3', '.php4', '.phtml', '.rb', '.rhtml', '.xml')
-
-comp_ext = ('.ar', '.bz2', '.gzip', '.rar', '.zip')
-
-data_ext = ('.bin', '.dif', '.dump', '.exe', '.iso', '.mid', '.midi', '.swf', '.tmp')
-
-win_ext = ('.doc', '.docm', '.docx', '.dot', '.dotx', '.eml', '.mdb', '.msi',
-           '.pot', '.potm', '.potx', '.ppam', '.pps', '.ppsm', '.ppsx', '.ppt',
-           '.pptm', '.pptx', '.pst', '.pub', '.sldm', '.sldx', '.sys', '.wks', '.wmd')
+TEXT_EXT = ('.txt', '.pdf', '.rtf', '.tif', '.tiff', '.vob')
+IMG_EXT = ('.bmp', '.gif', '.jpg', '.jpeg', '.png', '.thm')
+VID_EXT = ('.acc', '.adt', '.adts', '.avi', '.flv', '.mov', '.mpeg', '.wmv')
+MUSIC_EXT = ('.aif', '.aifc', '.aiff', '.m4a', '.mp3', '.mp4', '.wav', '.wma')
+CODE_EXT = ('.bat', '.csv', '.dll', '.htm', '.html', '.xhtml', '.jhtml', '.ini', '.jar', '.c',
+            '.cc', '.cpp', '.cxx', '.js', '.jse', '.cs', '.py', '.css', '.jsp', '.jspx', '.wss',
+            '.do', '.action', '.pl', '.php', '.php3', '.php4', '.phtml', '.rb', '.rhtml', '.xml')
+COMP_EXT = ('.ar', '.bz2', '.gzip', '.rar', '.zip')
+DATA_EXT = ('.bin', '.dif', '.dump', '.exe', '.iso', '.mid', '.midi', '.swf', '.tmp')
+WIN_EXT = ('.doc', '.docm', '.docx', '.dot', '.dotx', '.eml', '.mdb', '.msi', '.pot', '.potm',
+           '.potx', '.ppam', '.pps', '.ppsm', '.ppsx', '.ppt', '.pptm', '.pptx', '.pst', '.pub',
+           '.sldm', '.sldx', '.sys', '.wks', '.wmd')
 
 
 class BackupHandler(FileSystemEventHandler):
@@ -53,105 +44,57 @@ class BackupHandler(FileSystemEventHandler):
         :return:  Nothing
         """
         # Get the current working directory #
-        cwd = os.getcwd()
+        cwd = Path('.')
 
         # Iterate through available files in source dir #
         for file in os.scandir(SRC_DIR):
-            # If the OS is Windows #
-            if os.name == 'nt':
-                src_file = f'{cwd}\\{SRC_DIR}\\{file.name}'
-            # If the OS is Linux #
-            else:
-                # Set the source and destination files #
-                src_file = f'{cwd}/{SRC_DIR}/{file.name}'
+            # Set the source file path #
+            src_file = cwd / SRC_DIR / file.name
 
             # If the file is a text file #
-            if file.name.endswith(text_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{TEXT_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the TextFile dir #
-                    dst_file = f'{cwd}/{TEXT_DIR}/{file.name}'
+            if file.name.endswith(TEXT_EXT):
+                # Set the destination file path #
+                dst_file = cwd / TEXT_DIR / file.name
 
             # If the file is a image #
-            elif file.name.endswith(img_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{IMG_DIR}\\{file.name}'
-                # If the Os is Linux #
-                else:
-                    # Move file to the Images dir #
-                    dst_file = f'{cwd}/{IMG_DIR}/{file.name}'
+            elif file.name.endswith(IMG_EXT):
+                # Set the destination file path #
+                dst_file = cwd / IMG_DIR / file.name
 
             # If the file is a video #
-            elif file.name.endswith(vid_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{VID_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the Videos dir #
-                    dst_file = f'{cwd}/{VID_DIR}/{file.name}'
+            elif file.name.endswith(VID_EXT):
+                # Set the destination file path #
+                dst_file = cwd / VID_DIR / file.name
 
             # If the file is a music track #
-            elif file.name.endswith(music_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{MUSIC_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the Music dir #
-                    dst_file = f'{cwd}/{MUSIC_DIR}/{file.name}'
+            elif file.name.endswith(MUSIC_EXT):
+                # Set the destination file path #
+                dst_file = cwd / MUSIC_DIR / file.name
 
             # If the file is source code #
-            elif file.name.endswith(code_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{CODE_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the Code dir #
-                    dst_file = f'{cwd}/{CODE_DIR}/{file.name}'
+            elif file.name.endswith(CODE_EXT):
+                # Set the destination file path #
+                dst_file = cwd / CODE_DIR / file.name
 
             # If the file is a compressed archive #
-            elif file.name.endswith(comp_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{COMP_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the CompressedData dir #
-                    dst_file = f'{cwd}/{COMP_DIR}/{file.name}'
+            elif file.name.endswith(COMP_EXT):
+                # Set the destination file path #
+                dst_file = cwd / COMP_DIR / file.name
 
             # If the file in raw data format #
-            elif file.name.endswith(data_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{DATA_DIR}\\{file.name}'
-                else:
-                    # Move file to the RawData dir #
-                    dst_file = f'{cwd}/{DATA_DIR}/{file.name}'
+            elif file.name.endswith(DATA_EXT):
+                # Set the destination file path #
+                dst_file = cwd / DATA_DIR / file.name
 
             # If the file is a Windows based file #
-            elif file.name.endswith(win_ext):
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{WIN_DIR}\\{file.name}'
-                # If the OS is Linux #
-                else:
-                    # Move file to the MicrosoftFiles dir #
-                    dst_file = f'{cwd}/{WIN_DIR}/{file.name}'
+            elif file.name.endswith(WIN_EXT):
+                # Set the destination file path #
+                dst_file = cwd / WIN_DIR / file.name
 
             # If the file is of unknown data type #
             else:
-                # If the OS is Windows #
-                if os.name == 'nt':
-                    dst_file = f'{cwd}\\{OTHER_DIR}\\{file.name}'
-                else:
-                    # Move file to the OtherData dir #
-                    dst_file = f'{cwd}/{OTHER_DIR}/{file.name}'
+                # Set the destination file path #
+                dst_file = cwd / OTHER_DIR / file.name
 
             try:
                 # Copy the source dir file to the destination dir #
@@ -174,7 +117,7 @@ def main():
     for dirname in (SRC_DIR, TEXT_DIR, IMG_DIR, VID_DIR, MUSIC_DIR,
                     CODE_DIR, COMP_DIR, DATA_DIR, WIN_DIR, OTHER_DIR):
         # If the directory does not exist #
-        if not os.path.isdir(dirname):
+        if not os.path.exists(dirname):
             # Create the directory #
             os.mkdir(dirname)
 
