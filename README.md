@@ -1,16 +1,16 @@
-# AutoFile-Organizer
+<div align="center" style="font-family: monospace">
+<h1>AutoFile-Organizer</h1>
+&#9745;&#65039; Bandit verified &nbsp;|&nbsp; &#9745;&#65039; Synk verified &nbsp;|&nbsp; &#9745;&#65039; Pylint verified 10/10
+</div><br>
+
 ![alt text](https://github.com/ngimb64/AutoFile-Organizer/blob/main/AutoFileOrganizer.gif?raw=true)
 ![alt text](https://github.com/ngimb64/AutoFile-Organizer/blob/main/AutoFileOrganizer.png?raw=true)
 
-&#9745;&#65039; Bandit verified<br>
-&#9745;&#65039; Synk verified<br>
-&#9745;&#65039; Pylint verified 10/10
+## Purpose
+Monitors source folder and automatically organizes any introduced files by moving them to they're designated destination folder based on file extension.
 
 ## Prereqs
 This program runs on Windows 10 and Debian-based Linux, written in Python 3.9 and updated to version 3.10.6
-
-## Purpose
-Monitors source folder and automatically organizes any introduced files by moving them to they're designated destination folder based on file extension.
 
 ## Installation
 - Run the setup.py script to build a virtual environment and install all external packages in the created venv.

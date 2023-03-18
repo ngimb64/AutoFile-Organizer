@@ -8,6 +8,7 @@ from pathlib import Path
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+
 # Global variables #
 SRC_DIR = 'Dock'
 TEXT_DIR = 'TextFiles'
@@ -44,7 +45,7 @@ class BackupHandler(FileSystemEventHandler):
         :return:  Nothing
         """
         # Get the current working directory #
-        cwd = Path('.')
+        cwd = Path.cwd()
 
         # Iterate through available files in source dir #
         for file in os.scandir(SRC_DIR):
@@ -100,7 +101,7 @@ class BackupHandler(FileSystemEventHandler):
                 # Copy the source dir file to the destination dir #
                 shutil.copy(src_file, dst_file)
                 # Delete moved file from source dir #
-                os.remove(src_file)
+                src_file.unlink()
 
             # Ignore passive OS access errors #
             except OSError:
@@ -116,10 +117,12 @@ def main():
     # Ensure the program directories exist #
     for dirname in (SRC_DIR, TEXT_DIR, IMG_DIR, VID_DIR, MUSIC_DIR,
                     CODE_DIR, COMP_DIR, DATA_DIR, WIN_DIR, OTHER_DIR):
+        # Format current dir as path #
+        dir_path = Path.cwd() / dirname
         # If the directory does not exist #
-        if not os.path.exists(dirname):
+        if not dir_path.exists():
             # Create the directory #
-            os.mkdir(dirname)
+            dir_path.mkdir(parents=True)
 
     print('[!] Running File Backup Automater, hit Ctrl + C to exit')
 
